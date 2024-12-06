@@ -6,11 +6,15 @@ const movies = [
 
 const movieGrid = document.querySelector('.movie-grid');
 movies.forEach(movie => {
-    const movieElement = `
-        <a href="${movie.link}">
-            <img src="${movie.thumbnail}" alt="${movie.title} Thumbnail">
-            <h2>${movie.title}</h2>
-        </a>
+    const movieCard = `
+        <div class="movie-card">
+            <a href="${movie.link}">
+                <img src="${movie.thumbnail}" alt="${movie.title} Thumbnail">
+                <div class="overlay">
+                    <h2>${movie.title}</h2>
+                </div>
+            </a>
+        </div>
     `;
-    movieGrid.innerHTML += movieElement;
+    movieGrid.innerHTML += movieCard;
 });
