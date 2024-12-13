@@ -10,7 +10,22 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body><b>
+<script>
+document.addEventListener('click', function (event) {
+    // Check if the clicked element is a link
+    if (event.target.tagName === 'A') {
+        event.preventDefault(); // Prevent default navigation
 
+        const url = event.target.href;
+
+        if (url) {
+            // Open the link in a new tab or external browser
+            window.open(url, '_blank'); 
+        }
+    }
+});
+
+</script>
   <!-- Search Bar -->
   <nav><tyu style="font-size: 56px;">JUGADUFLIX</tyu>
   <center><input type="text" id="search-bar" class="search-bar" placeholder="Search movies..."></center>
