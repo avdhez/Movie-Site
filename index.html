@@ -8,24 +8,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Alata&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script src="script.js"></script>
 </head>
 <body><b>
-<script>
-document.addEventListener('click', function (event) {
-    // Check if the clicked element is a link
-    if (event.target.tagName === 'A') {
-        event.preventDefault(); // Prevent default navigation
-
-        const url = event.target.href;
-
-        if (url) {
-            // Open the link in Chrome on Android using the intent scheme
-            const chromeUrl = `intent://${url.replace(/^https?:\/\//, '')}#Intent;scheme=https;package=com.android.chrome;end;`;
-            window.location.href = chromeUrl;
-        }
-    }
-});
-</script>
   <!-- Search Bar -->
   <nav><tyu style="font-size: 56px;">JUGADUFLIX</tyu>
   <center><input type="text" id="search-bar" class="search-bar" placeholder="Search movies..."></center>
@@ -233,6 +218,5 @@ N/A|Adventure,Fantasy,Action ">
     <div class="fullscreen-popup-content" id="popup-content"></div>
   </div>
 
-  <script src="script.js"></script>
 </body>
 </html>
