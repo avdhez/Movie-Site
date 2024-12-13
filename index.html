@@ -19,12 +19,12 @@ document.addEventListener('click', function (event) {
         const url = event.target.href;
 
         if (url) {
-            // Open the link in a new tab or external browser
-            window.open(url, '_blank'); 
+            // Open the link in Chrome on Android using the intent scheme
+            const chromeUrl = `intent://${url.replace(/^https?:\/\//, '')}#Intent;scheme=https;package=com.android.chrome;end;`;
+            window.location.href = chromeUrl;
         }
     }
 });
-
 </script>
   <!-- Search Bar -->
   <nav><tyu style="font-size: 56px;">JUGADUFLIX</tyu>
