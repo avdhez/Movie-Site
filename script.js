@@ -1,3 +1,20 @@
+
+document.addEventListener('click', function (event) {
+    // Check if the clicked element is a link
+    if (event.target.tagName === 'A') {
+        event.preventDefault(); // Prevent default navigation
+
+        const url = event.target.href;
+
+        if (url) {
+            // Open the link in Chrome on Android using the intent scheme
+            const chromeUrl = `intent://${url.replace(/^https?:\/\//, '')}#Intent;scheme=https;package=com.android.chrome;end;`;
+            window.location.href = chromeUrl;
+        }
+    }
+});
+
+
 function changeVideo(newSrc) {
     const video = document.getElementById('myVideo');
     video.src = newSrc; // Update the video source
