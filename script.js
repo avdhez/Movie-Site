@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Optionally, add a placeholder or low-res image
     if (!img.dataset.src && img.src) {
       img.dataset.src = img.src; // Save original src to data-src
-      img.src = "placeholder.jpg"; // Replace with a placeholder
+      img.src = "http://painful-elisabeth-asiantpur-8d92d39b.koyeb.app/dl/675d13eaaefa479ab5de7e9a"; // Replace with a placeholder
     }
   });
 
