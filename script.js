@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Optionally, add a placeholder or low-res image
     if (!img.dataset.src && img.src) {
       img.dataset.src = img.src; // Save original src to data-src
-      img.src = "AddText_12-14-10.42.42.jpg"; // Replace with a placeholder
+      img.src = "AddText_12-14-11.12.50.jpg"; // Replace with a placeholder
     }
   });
 
