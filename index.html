@@ -43,27 +43,6 @@
     <div class="fullscreen-popup-content" id="popup-content"></div>
   </div>
   <script>
-    // Function to load content from multiple HTML files and append them
-    function loadContent() {
-      const filesToLoad = ['movies/HDRips.html','movies/WEBDL.html'];
-
-      filesToLoad.forEach(file => {
-        fetch(file)
-          .then(response => response.text())  // Get the content as text
-          .then(data => {
-            // Append the content to the container (e.g., #main-container)
-            const mainContainer = document.getElementById('main-container');
-            mainContainer.innerHTML += data;
-
-            // Reapply event listeners or any custom functionality
-            applyEventListeners();
-          })
-          .catch(error => {
-            console.error('Error loading content from', file, error);
-          });
-      });
-    }
-
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -107,6 +86,34 @@ document.addEventListener('DOMContentLoaded', function() {
   window.addEventListener('scroll', checkImagesInView);
   window.addEventListener('resize', checkImagesInView);
 });
+
+
+
+
+
+
+    // Function to load content from multiple HTML files and append them
+    function loadContent() {
+      const filesToLoad = ['movies/HDRips.html','movies/WEBDL.html'];
+
+      filesToLoad.forEach(file => {
+        fetch(file)
+          .then(response => response.text())  // Get the content as text
+          .then(data => {
+            // Append the content to the container (e.g., #main-container)
+            const mainContainer = document.getElementById('main-container');
+            mainContainer.innerHTML += data;
+
+            // Reapply event listeners or any custom functionality
+            applyEventListeners();
+          })
+          .catch(error => {
+            console.error('Error loading content from', file, error);
+          });
+      });
+    }
+
+
 
 
 
