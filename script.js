@@ -1,3 +1,53 @@
+document.addEventListener("DOMContentLoaded", () => {
+  const images = document.querySelectorAll("img");
+  
+  images.forEach((img) => {
+    // Check if the image already has lazy loading
+    if (!img.hasAttribute("loading")) {
+      img.setAttribute("loading", "lazy");
+    }
+
+    // Optionally, add a placeholder or low-res image
+    if (!img.dataset.src && img.src) {
+      img.dataset.src = img.src; // Save original src to data-src
+      img.src = "placeholder.jpg"; // Replace with a placeholder
+    }
+  });
+
+  // If Intersection Observer is available, implement lazy loading
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          if (img.dataset.src) {
+            img.src = img.dataset.src; // Replace src with the original
+            img.removeAttribute("data-src"); // Clean up
+          }
+          observer.unobserve(img); // Stop observing
+        }
+      });
+    });
+
+    images.forEach((img) => observer.observe(img));
+  } else {
+    // Fallback for older browsers: Load all images immediately
+    images.forEach((img) => {
+      if (img.dataset.src) {
+        img.src = img.dataset.src;
+        img.removeAttribute("data-src");
+      }
+    });
+  }
+});
+
+
+
+
+
+
+
+
 
 
 
