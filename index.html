@@ -433,36 +433,6 @@ N/A|Adventure,Fantasy,Action ">
   </div>
 
   <script src="script.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const htmlFiles = ["index2.html", "index3.html"]; // List of HTML files to fetch
-      const mainContainer = document.getElementById("main-container");
 
-      htmlFiles.forEach((file) => {
-        fetch(file)
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(`Failed to fetch ${file}`);
-            }
-            return response.text();
-          })
-          .then((html) => {
-            const tempDiv = document.createElement("div");
-            tempDiv.innerHTML = html;
-
-            // Extract content inside <div class="post-container">
-            const postContainer = tempDiv.querySelector(".post-container");
-            if (postContainer) {
-              mainContainer.appendChild(postContainer);
-            } else {
-              console.warn(`No .post-container found in ${file}`);
-            }
-          })
-          .catch((error) => {
-            console.error(`Error fetching ${file}:`, error.message);
-          });
-      });
-    });
-  </script>
 </body>
 </html>
