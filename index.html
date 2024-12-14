@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Movie Index with Search</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alata&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Floating Buttons -->
+  <div class="floating-button" style="top: 10px; left: 10px;">
+    <button onclick="window.location.href='intent://t.me/avdhez#Intent;scheme=http;package=com.android.chrome;end';">
+      <i class="fa fa-telegram" style="font-size:36px"></i>
+    </button><br/>
+    <button onclick="window.location.href='https://example.com';">
+      <i class="fa fa-bars" style="font-size:36px"></i>
+    </button>
+  </div>
+
+  <div class="floating-button" style="top: 10px; right: 10px;">
+    <button onclick="window.location.href='https://example.com';">
+      <i class="fa fa-download" style="font-size:36px"></i>
+    </button><br/>
+    <button onclick="window.location.href='https://example.com';">
+      <i class="fa fa-flash" style="font-size:36px"></i>
+    </button>
+  </div>
+
+  <!-- Search Bar -->
+  <nav><tyu style="font-size: 56px;color: red;letter-spacing: 7px;">AFLIX</tyu>
+  <center><input type="text" id="search-bar" class="search-bar" placeholder="Search movies..."></center>
+    </nav>
+  <!-- Main Container where content will be loaded -->
+  <div id="main-container" class="post-container"></div>
+
+  <!-- Fullscreen Popup -->
+  <div class="fullscreen-popup" id="popup-container">
+    <button class="close-popup" id="close-popup">X</button>
+    <div class="fullscreen-popup-content" id="popup-content"></div>
+  </div>
+  <script>
+    // Function to load content from multiple HTML files and append them
+    function loadContent() {
+      const filesToLoad = ['movies/HDRips.html','movies/index2.html'];
+
+      filesToLoad.forEach(file => {
+        fetch(file)
+          .then(response => response.text())  // Get the content as text
+          .then(data => {
+            // Append the content to the container (e.g., #main-container)
+            const mainContainer = document.getElementById('main-container');
+            mainContainer.innerHTML += data;
+
+            // Reapply event listeners or any custom functionality
+            applyEventListeners();
+          })
+          .catch(error => {
+            console.error('Error loading content from', file, error);
+          });
+      });
+    }
+
+    // Function to handle popup functionality and other dynamic elements
+    function applyEventListeners() {
+      // Popup functionality for images in the dynamically loaded content
+      const posts = document.querySelectorAll('.post img');
+      const popupContainer = document.getElementById('popup-container');
+      const popupContent = document.getElementById('popup-content');
+      const closePopup = document.getElementById('close-popup');
+
+      posts.forEach(post => {
+        post.addEventListener('click', () => {
+          const popupData = post.nextElementSibling.innerHTML;  // Get the associated popup content
+          popupContent.innerHTML = popupData;
+          popupContainer.classList.add('active');
+        });
+      });
+
+      closePopup.addEventListener('click', () => {
+        popupContainer.classList.remove('active');
+      });
+
+      // You may want to add additional event listeners here for dynamic links or other content.
+
+      // Search functionality
+      const searchBar = document.getElementById('search-bar');
+      const postDivs = document.querySelectorAll('.post');
+
+      // Search functionality
+      searchBar.addEventListener('input', () => {
+        const searchTerm = searchBar.value.toLowerCase();
+        postDivs.forEach(post => {
+          const altText = post.querySelector('img').alt.toLowerCase();
+          if (altText.includes(searchTerm)) {
+            post.style.display = 'inline-block';
+          } else {
+            post.style.display = 'none';
+          }
+        });
+      });
+    }
+
+    // Function to intercept link clicks and open them in Chrome on Android
+    document.addEventListener('click', function (event) {
+      // Check if the clicked element is a link
+      if (event.target.tagName === 'A') {
+        event.preventDefault(); // Prevent default navigation
+
+        const url = event.target.href;
+
+        if (url) {
+          // Open the link in Chrome on Android using the intent scheme
+          const chromeUrl = `intent://${url.replace(/^https?:\/\//, '')}#Intent;scheme=https;package=com.android.chrome;end;`;
+          window.location.href = chromeUrl;
+        }
+      }
+    });
+
+    // Call the function when the page loads
+    window.onload = loadContent;
+  </script>
+</body>
+</html>
