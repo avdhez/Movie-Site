@@ -61,3 +61,22 @@ document.addEventListener('click', function (event) {
         }
     }
 });
+
+
+
+
+function openInBrowser(url) {
+    if (window.navigator && window.navigator.userAgent) {
+        const userAgent = window.navigator.userAgent.toLowerCase();
+        if (userAgent.includes('android')) {
+            // Open with Android's intent for Chrome
+            window.open(url, '_system');
+        } else {
+            // Default behavior for other platforms
+            window.open(url, '_blank');
+        }
+    } else {
+        // Fallback
+        window.open(url, '_blank');
+    }
+}
