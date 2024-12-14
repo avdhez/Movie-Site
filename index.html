@@ -4,78 +4,42 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>Movie Index with Search</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Alata&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alata&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<script></script>
-<div style="
-      top: 10px; /* Distance from the bottom */
-      left: 10px;  /* Distance from the right */" class="floating-button"><button onclick="window.location.href='intent://t.me/avdhez#Intent;scheme=http;package=com.android.chrome;end';">
-    <i class="fa fa-telegram" style="font-size:36px"></i>
-  </button><br/><button onclick="window.location.href='https://example.com';">
-<i class="fa fa-bars" style="font-size:36px"></i></button></div>
+  <!-- Floating Buttons -->
+  <div class="floating-button" style="top: 10px; left: 10px;">
+    <button onclick="window.location.href='intent://t.me/avdhez#Intent;scheme=http;package=com.android.chrome;end';">
+      <i class="fa fa-telegram" style="font-size:36px"></i>
+    </button><br/>
+    <button onclick="window.location.href='https://example.com';">
+      <i class="fa fa-bars" style="font-size:36px"></i>
+    </button>
+  </div>
 
-<div style="top: 10px;right: 10px;" class="floating-button"><button onclick="window.location.href='https://example.com';">
-<i class="fa fa-download" style="font-size:36px"></i></button><br/><button onclick="window.location.href='https://example.com';">
-<i class="fa fa-flash" style="font-size:36px"></i></button></div>
-<b>
+  <div class="floating-button" style="top: 10px; right: 10px;">
+    <button onclick="window.location.href='https://example.com';">
+      <i class="fa fa-download" style="font-size:36px"></i>
+    </button><br/>
+    <button onclick="window.location.href='https://example.com';">
+      <i class="fa fa-flash" style="font-size:36px"></i>
+    </button>
+  </div>
+
   <!-- Search Bar -->
-  <nav><tyu style="font-size: 56px;color: red;letter-spacing: 7px;">AFLIX</tyu>
-  <center><input type="text" id="search-bar" class="search-bar" placeholder="Search movies..."></center>
+  <b>
+    <nav>
+      <span style="font-size: 56px;color: red;letter-spacing: 7px;">AFLIX</span>
+      <center><input type="text" id="search-bar" class="search-bar" placeholder="Search movies..."></center>
     </nav>
-<div id="main-container" class="post-container">
+  </b>
 
-
-
-
-<div class="post">
-      <img src="https://upload.wikimedia.org/wikipedia/en/e/ec/Kraven_the_Hunter_%28film%29_poster.jpg" alt="Kraven The Hunter (2024) 480P PREDvd Rip in English Action Sci-fi  ">
-      <popup>
-        <div class="popup-content">
-          <h2>Kraven The Hunter (2024) PREDvd Rip in English </h2>
-          <h3>CHOOSE THE APPROPRIATE OPTION TO DOWNLOAD </h3>
-          <a href="https://tt.me">720p</a>
-          <a href="http://painful-elisabeth-asiantpur-8d92d39b.koyeb.app/watch/675d27bcaefa479ab5de7eab">480p</a>
-        </div>
-      </popup>
-    </div>
-
-
-
-
-    <div class="post">
-      <img src="https://m.media-amazon.com/images/M/MV5BNWU1ZWFhNGQtZDhlZC00ZWFlLTlmNmEtN2VmYmZiN2Y5ZmQ2XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" alt="Pushpa: The Rule (2024)">
-      <popup>
-        <div class="popup-content">
-          <h2>Pushpa: The Rule (2024) HDTS Movie In Hindi+Telugu x256</h2>
-          <h3>CHOOSE THE APPROPRIATE OPTION TO DOWNLOAD </h3>
-          <a href="http://painful-elisabeth-asiantpur-8d92d39b.koyeb.app/watch/6753c982aefa479ab5de7e70">720p</a>
-          <a href="http://painful-elisabeth-asiantpur-8d92d39b.koyeb.app/watch/6753c981aefa479ab5de7e6f">480p</a>
-        </div>
-      </popup>
-    </div>
-
-
-
-
-
-
-
-
-
-<!-- ABOVE AREA FOR PREDVDS -->
-
-
-
-
-
-
-
-
+  <!-- Main Container where content will be loaded -->
+  <div id="main-container" class="post-container"></div>
 
   <!-- Fullscreen Popup -->
   <div class="fullscreen-popup" id="popup-container">
@@ -83,37 +47,86 @@
     <div class="fullscreen-popup-content" id="popup-content"></div>
   </div>
 
-  <script src="script.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const htmlFiles = ["index2.html", "index3.html"]; // List of HTML files to fetch
-      const mainContainer = document.getElementById("main-container");
+  <script>
+    // Function to load content from multiple HTML files and append them
+    function loadContent() {
+      const filesToLoad = ['index2.html', 'index3.html'];
 
-      htmlFiles.forEach((file) => {
+      filesToLoad.forEach(file => {
         fetch(file)
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(`Failed to fetch ${file}`);
-            }
-            return response.text();
-          })
-          .then((html) => {
-            const tempDiv = document.createElement("div");
-            tempDiv.innerHTML = html;
+          .then(response => response.text())  // Get the content as text
+          .then(data => {
+            // Append the content to the container (e.g., #main-container)
+            const mainContainer = document.getElementById('main-container');
+            mainContainer.innerHTML += data;
 
-            // Extract content inside <div class="post-container">
-            const postContainer = tempDiv.querySelector(".post-container");
-            if (postContainer) {
-              mainContainer.appendChild(postContainer);
-            } else {
-              console.warn(`No .post-container found in ${file}`);
-            }
+            // Reapply event listeners or any custom functionality
+            applyEventListeners();
           })
-          .catch((error) => {
-            console.error(`Error fetching ${file}:`, error.message);
+          .catch(error => {
+            console.error('Error loading content from', file, error);
           });
       });
+    }
+
+    // Function to handle popup functionality and other dynamic elements
+    function applyEventListeners() {
+      // Popup functionality for images in the dynamically loaded content
+      const posts = document.querySelectorAll('.post img');
+      const popupContainer = document.getElementById('popup-container');
+      const popupContent = document.getElementById('popup-content');
+      const closePopup = document.getElementById('close-popup');
+
+      posts.forEach(post => {
+        post.addEventListener('click', () => {
+          const popupData = post.nextElementSibling.innerHTML;  // Get the associated popup content
+          popupContent.innerHTML = popupData;
+          popupContainer.classList.add('active');
+        });
+      });
+
+      closePopup.addEventListener('click', () => {
+        popupContainer.classList.remove('active');
+      });
+
+      // You may want to add additional event listeners here for dynamic links or other content.
+
+      // Search functionality
+      const searchBar = document.getElementById('search-bar');
+      const postDivs = document.querySelectorAll('.post');
+
+      // Search functionality
+      searchBar.addEventListener('input', () => {
+        const searchTerm = searchBar.value.toLowerCase();
+        postDivs.forEach(post => {
+          const altText = post.querySelector('img').alt.toLowerCase();
+          if (altText.includes(searchTerm)) {
+            post.style.display = 'inline-block';
+          } else {
+            post.style.display = 'none';
+          }
+        });
+      });
+    }
+
+    // Function to intercept link clicks and open them in Chrome on Android
+    document.addEventListener('click', function (event) {
+      // Check if the clicked element is a link
+      if (event.target.tagName === 'A') {
+        event.preventDefault(); // Prevent default navigation
+
+        const url = event.target.href;
+
+        if (url) {
+          // Open the link in Chrome on Android using the intent scheme
+          const chromeUrl = `intent://${url.replace(/^https?:\/\//, '')}#Intent;scheme=https;package=com.android.chrome;end;`;
+          window.location.href = chromeUrl;
+        }
+      }
     });
+
+    // Call the function when the page loads
+    window.onload = loadContent;
   </script>
 </body>
 </html>
