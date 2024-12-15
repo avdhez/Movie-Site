@@ -45,49 +45,6 @@
   <script>
 
 
-document.addEventListener('DOMContentLoaded', function() {
-  const placeholder = 'AddText_12-14-11.12.50.jpg';  // Set the path to your placeholder image
-  
-  const images = document.querySelectorAll('img[data-src]'); // Select all images with data-src attribute
-
-  // Set placeholder src for all images that have data-src
-  images.forEach(image => {
-    image.src = placeholder; // Set placeholder image initially
-    image.setAttribute('loading', 'lazy'); // Optional: add lazy loading attribute
-  });
-
-  // Function to load the image
-  const loadImage = (image) => {
-    const src = image.getAttribute('data-src'); // Get the image URL from data-src
-    if (src) {
-      const tempImage = new Image(); // Create a temporary image element
-      tempImage.onload = function() {
-        image.src = src; // Replace the src with the actual image
-        image.removeAttribute('data-src'); // Remove data-src after loading
-      };
-      tempImage.src = src; // Start loading the actual image
-    }
-  };
-
-  // Function to check if the image is in the viewport
-  const checkImagesInView = () => {
-    images.forEach(image => {
-      const rect = image.getBoundingClientRect();
-      if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
-        loadImage(image); // Load the image if it's in the viewport
-      }
-    });
-  };
-
-  // Initial check for images in view
-  checkImagesInView();
-
-  // Event listener for scroll and resize to lazy load images when they enter the viewport
-  window.addEventListener('scroll', checkImagesInView);
-  window.addEventListener('resize', checkImagesInView);
-});
-
-
 
 
 
