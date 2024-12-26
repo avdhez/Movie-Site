@@ -8,137 +8,55 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Alata&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/echojs@2.0.0/dist/echo.min.js"></script>
+  <style>
+    body {
+      background: black;
+      font-family: 'Alata', sans-serif;
+      font-weight: 800;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      padding: 10px;
+      width: 80%;
+      max-width: 800px;
+      border: 5px solid red;
+      box-shadow: 0 0 10px red;
+      border-radius: 10px;
+      color: white;
+      text-align: center;
+    }
+    .btn-update {
+      margin: 20px;
+      border: 6px solid red;
+      border-radius: 10px;
+      color: black;
+      background: red;
+      padding: 5px;
+      width: 70%;
+      font-size: 20px;
+      line-height: 40px;
+      text-decoration: none;
+      display: inline-block;
+    }
+  </style>
 </head>
 <body>
-  <!-- Floating Buttons -->
-  <div class="floating-button" style="top: 10px; left: 10px;">
-    <button onclick="window.location.href='intent://t.me/avdhez#Intent;scheme=http;package=com.android.chrome;end';">
-      <i class="fa fa-telegram" style="font-size:36px"></i>
-    </button><br/>
-    <button onclick="window.location.href='https://example.com';">
-      <i class="fa fa-bars" style="font-size:36px"></i>
-    </button>
-  </div>
+  <div class="container">
+    <h2>! UPDATE !</h2>
+    <p>YOU ARE USING OUTDATED APP. PLEASE DOWNLOAD THE NEW APP FROM THE LINK BELOW:</p>
+    <a href="https://aflixdownload.blogspot.com/?m=1" class="btn-update" id="update-link">UPDATE APP</a>
 
-  <div class="floating-button" style="top: 10px; right: 10px;">
-    <button onclick="window.location.href='https://example.com';">
-      <i class="fa fa-download" style="font-size:36px"></i>
-    </button><br/>
-    <button onclick="window.location.href='https://example.com';">
-      <i class="fa fa-flash" style="font-size:36px"></i>
-    </button>
-  </div>
-
-  <!-- Search Bar -->
-  <nav>
-    <tyu style="font-size: 56px;color: red;letter-spacing: 7px;">AFLIX</tyu>
-    <center><input type="text" id="search-bar" class="search-bar" placeholder="Search movies..."></center>
-  </nav>
-
-  <!-- Main Container where content will be loaded -->
-  <div id="main-container" class="post-container"></div>
-
-  <!-- Fullscreen Popup -->
-  <div class="fullscreen-popup" id="popup-container">
-    <button class="close-popup" id="close-popup">X</button>
-    <div class="fullscreen-popup-content" id="popup-content"></div>
-  </div>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const images = document.querySelectorAll('img');
-
-      // Set a placeholder image initially
-      images.forEach(img => {
-        img.src = 'https://raw.githubusercontent.com/avdhez/Movie-Site/refs/heads/main/AddText_12-26-09.23.23.webp'; // Placeholder image
-        img.setAttribute('data-src', img.getAttribute('src')); // Store the real image URL in data-src attribute
-        img.removeAttribute('src'); // Remove src initially
-      });
-
-      // Function to load content from multiple HTML files and append them
-      function loadContent() {
-        const filesToLoad = ['movies/HDRips.html', 'movies/WEBDL.html'];
-
-        filesToLoad.forEach(file => {
-          fetch(file)
-            .then(response => response.text())  // Get the content as text
-            .then(data => {
-              // Append the content to the container (e.g., #main-container)
-              const mainContainer = document.getElementById('main-container');
-              mainContainer.innerHTML += data;
-
-              // Reapply event listeners or any custom functionality
-              applyEventListeners();
-            })
-            .catch(error => {
-              console.error('Error loading content from', file, error);
-            });
-        });
-      }
-
-      // Function to handle popup functionality and other dynamic elements
-      function applyEventListeners() {
-        // Popup functionality for images in the dynamically loaded content
-        const posts = document.querySelectorAll('.post img');
-        const popupContainer = document.getElementById('popup-container');
-        const popupContent = document.getElementById('popup-content');
-        const closePopup = document.getElementById('close-popup');
-
-        posts.forEach(post => {
-          post.addEventListener('click', () => {
-            const popupData = post.nextElementSibling.innerHTML;  // Get the associated popup content
-            popupContent.innerHTML = popupData;
-            popupContainer.classList.add('active');
-          });
-        });
-
-        closePopup.addEventListener('click', () => {
-          popupContainer.classList.remove('active');
-        });
-
-        // Search functionality
-        const searchBar = document.getElementById('search-bar');
-        const postDivs = document.querySelectorAll('.post');
-
-        // Search functionality
-        searchBar.addEventListener('input', () => {
-          const searchTerm = searchBar.value.toLowerCase();
-          postDivs.forEach(post => {
-            const altText = post.querySelector('img').alt.toLowerCase();
-            if (altText.includes(searchTerm)) {
-              post.style.display = 'inline-block';
-            } else {
-              post.style.display = 'none';
-            }
-          });
-        });
-      }
-
-      // IntersectionObserver for lazy loading images
-      document.addEventListener('DOMContentLoaded', function () {
-        const images = document.querySelectorAll('img');
-
-        const observer = new IntersectionObserver((entries, observer) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              const img = entry.target;
-              const originalSrc = img.getAttribute('data-src'); // Get actual image from data-src attribute
-              img.src = originalSrc; // Set the real image
-              img.onload = () => img.classList.add('loaded'); // Optionally add a class for animations or effects
-              observer.unobserve(img); // Stop observing once the image is loaded
-            }
-          });
-        }, { threshold: 0.1 });
-
-        images.forEach(img => {
-          observer.observe(img);
-        });
-      });
-
-      // Call the function when the page loads
-      window.onload = loadContent;
+<script>
+    document.getElementById("update-link").addEventListener("click", function(event) {
+        event.preventDefault(); // Prevent the default action
+        window.open(this.href, '_blank'); // Open the link in a new tab
     });
-  </script>
+</script>
+  </div>
 </body>
 </html>
