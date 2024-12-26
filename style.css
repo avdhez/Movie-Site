@@ -14,7 +14,6 @@ button {
     border-radius: 5px;
     font-size: 5px;
     cursor: pointer;
-word-break: break-all;
   }
 
 /* Floating Button Style */
@@ -139,6 +138,7 @@ img {
   align-items: center;
   z-index: 1000;
   backdrop-filter: blur(12px);
+word-wrap: break-word;
 }
 
 .fullscreen-popup.active {
