@@ -49,97 +49,96 @@
     document.addEventListener("DOMContentLoaded", function() {
       const images = document.querySelectorAll('img');
 
+      // Set a placeholder image initially
       images.forEach(img => {
-        const originalSrc = img.src;
-        img.src = 'https://raw.githubusercontent.com/avdhez/Movie-Site/refs/heads/main/AddText_12-26-09.23.23.webp'; // Set the placeholder image
-
-        // Replace placeholder with the actual image when it comes into view
-        img.onload = () => img.src = originalSrc;
+        img.src = 'https://raw.githubusercontent.com/avdhez/Movie-Site/refs/heads/main/AddText_12-26-09.23.23.webp'; // Placeholder image
+        img.setAttribute('data-src', img.getAttribute('src')); // Store the real image URL in data-src attribute
+        img.removeAttribute('src'); // Remove src initially
       });
-    });
 
-    // Function to load content from multiple HTML files and append them
-    function loadContent() {
-      const filesToLoad = ['movies/HDRips.html', 'movies/WEBDL.html'];
+      // Function to load content from multiple HTML files and append them
+      function loadContent() {
+        const filesToLoad = ['movies/HDRips.html', 'movies/WEBDL.html'];
 
-      filesToLoad.forEach(file => {
-        fetch(file)
-          .then(response => response.text())  // Get the content as text
-          .then(data => {
-            // Append the content to the container (e.g., #main-container)
-            const mainContainer = document.getElementById('main-container');
-            mainContainer.innerHTML += data;
+        filesToLoad.forEach(file => {
+          fetch(file)
+            .then(response => response.text())  // Get the content as text
+            .then(data => {
+              // Append the content to the container (e.g., #main-container)
+              const mainContainer = document.getElementById('main-container');
+              mainContainer.innerHTML += data;
 
-            // Reapply event listeners or any custom functionality
-            applyEventListeners();
-          })
-          .catch(error => {
-            console.error('Error loading content from', file, error);
+              // Reapply event listeners or any custom functionality
+              applyEventListeners();
+            })
+            .catch(error => {
+              console.error('Error loading content from', file, error);
+            });
+        });
+      }
+
+      // Function to handle popup functionality and other dynamic elements
+      function applyEventListeners() {
+        // Popup functionality for images in the dynamically loaded content
+        const posts = document.querySelectorAll('.post img');
+        const popupContainer = document.getElementById('popup-container');
+        const popupContent = document.getElementById('popup-content');
+        const closePopup = document.getElementById('close-popup');
+
+        posts.forEach(post => {
+          post.addEventListener('click', () => {
+            const popupData = post.nextElementSibling.innerHTML;  // Get the associated popup content
+            popupContent.innerHTML = popupData;
+            popupContainer.classList.add('active');
           });
-      });
-    }
+        });
 
-    // Function to handle popup functionality and other dynamic elements
-    function applyEventListeners() {
-      // Popup functionality for images in the dynamically loaded content
-      const posts = document.querySelectorAll('.post img');
-      const popupContainer = document.getElementById('popup-container');
-      const popupContent = document.getElementById('popup-content');
-      const closePopup = document.getElementById('close-popup');
+        closePopup.addEventListener('click', () => {
+          popupContainer.classList.remove('active');
+        });
 
-      posts.forEach(post => {
-        post.addEventListener('click', () => {
-          const popupData = post.nextElementSibling.innerHTML;  // Get the associated popup content
-          popupContent.innerHTML = popupData;
-          popupContainer.classList.add('active');
+        // Search functionality
+        const searchBar = document.getElementById('search-bar');
+        const postDivs = document.querySelectorAll('.post');
+
+        // Search functionality
+        searchBar.addEventListener('input', () => {
+          const searchTerm = searchBar.value.toLowerCase();
+          postDivs.forEach(post => {
+            const altText = post.querySelector('img').alt.toLowerCase();
+            if (altText.includes(searchTerm)) {
+              post.style.display = 'inline-block';
+            } else {
+              post.style.display = 'none';
+            }
+          });
+        });
+      }
+
+      // IntersectionObserver for lazy loading images
+      document.addEventListener('DOMContentLoaded', function () {
+        const images = document.querySelectorAll('img');
+
+        const observer = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              const originalSrc = img.getAttribute('data-src'); // Get actual image from data-src attribute
+              img.src = originalSrc; // Set the real image
+              img.onload = () => img.classList.add('loaded'); // Optionally add a class for animations or effects
+              observer.unobserve(img); // Stop observing once the image is loaded
+            }
+          });
+        }, { threshold: 0.1 });
+
+        images.forEach(img => {
+          observer.observe(img);
         });
       });
 
-      closePopup.addEventListener('click', () => {
-        popupContainer.classList.remove('active');
-      });
-
-      // Search functionality
-      const searchBar = document.getElementById('search-bar');
-      const postDivs = document.querySelectorAll('.post');
-
-      // Search functionality
-      searchBar.addEventListener('input', () => {
-        const searchTerm = searchBar.value.toLowerCase();
-        postDivs.forEach(post => {
-          const altText = post.querySelector('img').alt.toLowerCase();
-          if (altText.includes(searchTerm)) {
-            post.style.display = 'inline-block';
-          } else {
-            post.style.display = 'none';
-          }
-        });
-      });
-    }
-
-    // IntersectionObserver for lazy loading images
-    document.addEventListener('DOMContentLoaded', function () {
-      const images = document.querySelectorAll('img');
-      
-      const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const img = entry.target;
-            const originalSrc = img.dataset.src; // Assuming the original image URL is stored in the data-src attribute
-            img.src = originalSrc;
-            img.onload = () => img.classList.add('loaded');
-            observer.unobserve(img); // Stop observing the image once it’s loaded
-          }
-        });
-      }, { threshold: 0.1 });
-
-      images.forEach(img => {
-        observer.observe(img);
-      });
+      // Call the function when the page loads
+      window.onload = loadContent;
     });
-
-    // Call the function when the page loads
-    window.onload = loadContent;
   </script>
 </body>
 </html>
