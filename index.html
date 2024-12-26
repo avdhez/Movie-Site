@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Alata&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <!-- Floating Buttons -->
@@ -31,9 +31,11 @@
   </div>
 
   <!-- Search Bar -->
-  <nav><tyu style="font-size: 56px;color: red;letter-spacing: 7px;">AFLIX</tyu>
-  <center><input type="text" id="search-bar" class="search-bar" placeholder="Search movies..."></center>
-    </nav>
+  <nav>
+    <tyu style="font-size: 56px;color: red;letter-spacing: 7px;">AFLIX</tyu>
+    <center><input type="text" id="search-bar" class="search-bar" placeholder="Search movies..."></center>
+  </nav>
+
   <!-- Main Container where content will be loaded -->
   <div id="main-container" class="post-container"></div>
 
@@ -43,40 +45,22 @@
     <div class="fullscreen-popup-content" id="popup-content"></div>
   </div>
 
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  const images = document.querySelectorAll('img');
-  
-  images.forEach(img => {
-    const originalSrc = img.src;
-    img.src = 'https://raw.githubusercontent.com/avdhez/Movie-Site/refs/heads/main/AddText_12-26-09.23.23.webp'; // Set the placeholder image
-    
-    // Replace placeholder with the actual image when it comes into view
-    img.onload = () => img.src = originalSrc;
-  });
-});
-
-</script>
-
-
-
-
   <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const images = document.querySelectorAll('img');
 
-document.addEventListener('contextmenu', function(e) {
-  e.preventDefault();
-});
+      images.forEach(img => {
+        const originalSrc = img.src;
+        img.src = 'https://raw.githubusercontent.com/avdhez/Movie-Site/refs/heads/main/AddText_12-26-09.23.23.webp'; // Set the placeholder image
 
-
-
-
-
-
+        // Replace placeholder with the actual image when it comes into view
+        img.onload = () => img.src = originalSrc;
+      });
+    });
 
     // Function to load content from multiple HTML files and append them
     function loadContent() {
-      const filesToLoad = ['movies/HDRips.html','movies/WEBDL.html'];
+      const filesToLoad = ['movies/HDRips.html', 'movies/WEBDL.html'];
 
       filesToLoad.forEach(file => {
         fetch(file)
@@ -94,11 +78,6 @@ document.addEventListener('contextmenu', function(e) {
           });
       });
     }
-
-
-
-
-
 
     // Function to handle popup functionality and other dynamic elements
     function applyEventListeners() {
@@ -120,8 +99,6 @@ document.addEventListener('contextmenu', function(e) {
         popupContainer.classList.remove('active');
       });
 
-      // You may want to add additional event listeners here for dynamic links or other content.
-
       // Search functionality
       const searchBar = document.getElementById('search-bar');
       const postDivs = document.querySelectorAll('.post');
@@ -140,8 +117,26 @@ document.addEventListener('contextmenu', function(e) {
       });
     }
 
+    // IntersectionObserver for lazy loading images
+    document.addEventListener('DOMContentLoaded', function () {
+      const images = document.querySelectorAll('img');
+      
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            const originalSrc = img.dataset.src; // Assuming the original image URL is stored in the data-src attribute
+            img.src = originalSrc;
+            img.onload = () => img.classList.add('loaded');
+            observer.unobserve(img); // Stop observing the image once it’s loaded
+          }
+        });
+      }, { threshold: 0.1 });
 
-
+      images.forEach(img => {
+        observer.observe(img);
+      });
+    });
 
     // Call the function when the page loads
     window.onload = loadContent;
