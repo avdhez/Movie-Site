@@ -44,6 +44,11 @@
   </div>
   <script>
 
+document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();
+});
+
+
 
 
 
@@ -71,6 +76,19 @@
     }
 
 
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  const images = document.querySelectorAll('img');
+  
+  images.forEach(img => {
+    const originalSrc = img.src;
+    img.src = 'https://raw.githubusercontent.com/avdhez/Movie-Site/refs/heads/main/AddText_12-26-09.23.23.webp'; // Set the placeholder image
+    
+    // Replace placeholder with the actual image when it comes into view
+    img.onload = () => img.src = originalSrc;
+  });
+});
 
 
 
