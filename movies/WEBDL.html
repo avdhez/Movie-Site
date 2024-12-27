@@ -685,22 +685,3 @@ N/A|Adventure,Fantasy,Action ">
         </div>
       </popup>
     </div>
- <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const lazyImages = document.querySelectorAll('.lazy-load');
-      const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const img = entry.target;
-            img.src = img.dataset.src; // Replace src with actual image
-            img.classList.add('loaded'); // Remove blur
-            observer.unobserve(img);
-          }
-        });
-      });
-
-      lazyImages.forEach(img => {
-        observer.observe(img);
-      });
-    });
-  </script>
