@@ -1,0 +1,29 @@
+title: My Jekyll Blog
+description: A modern blog built with Jekyll
+url: "https://yourusername.github.io" # Replace with your GitHub username
+baseurl: "" # Leave empty for user/organization sites
+email: your@email.com
+author: Your Name
+twitter_username: yourhandle
+github_username: yourusername
+
+# Blog settings
+permalink: /:year/:month/:title/
+paginate: 5
+paginate_path: /blog/page:num/
+timezone: America/New_York # Set your timezone
+
+# Build settings
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
